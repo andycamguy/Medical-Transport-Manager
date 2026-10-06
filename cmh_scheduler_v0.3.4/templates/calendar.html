@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><h1>CALENDAR</h1><p class="muted">Select a date to see its transportation trips.</p></div></section>
+<section class="card"><div class="calendar-toolbar"><button class="icon-button" onclick="changeMonth(-1)">‹</button><h2 id="calendar-month"></h2><button class="icon-button" onclick="changeMonth(1)">›</button></div><div id="calendar-grid" class="calendar-grid"></div></section>
+<section class="card"><div class="card-title-row"><h2 id="selected-date-title">Selected Date</h2><div class="heading-actions"><span id="selected-date-count" class="count-pill"></span><a id="selected-date-link" class="button secondary" href="/">OPEN THIS DAY</a></div></div><div id="calendar-trips"></div></section>
+{% endblock %}
+{% block scripts %}<script>initCalendar();</script>{% endblock %}

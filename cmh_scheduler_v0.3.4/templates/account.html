@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><h1>MY ACCOUNT</h1><p class="muted">Change the password for {{ current_user_data.username }}.</p></div></section>
+<section class="card account-card">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}<div class="alert {{ 'error' if category == 'error' else 'success' }}">{{ message }}</div>{% endfor %}
+  {% endwith %}
+  <form method="post" class="form-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="current_password">Current Password</label><input id="current_password" name="current_password" type="password" required></div>
+    <div class="field"><label for="new_password">New Password</label><input id="new_password" name="new_password" type="password" minlength="12" required></div>
+    <div class="field"><label for="confirm_password">Confirm New Password</label><input id="confirm_password" name="confirm_password" type="password" minlength="12" required></div>
+    <div class="form-actions full-width"><button class="button primary" type="submit">CHANGE PASSWORD</button></div>
+  </form>
+</section>
+{% endblock %}

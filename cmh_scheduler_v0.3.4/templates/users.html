@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><h1>USER ACCOUNTS</h1><p class="muted">Owner-only account management.</p></div></section>
+<section class="card">
+  {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="alert {{ 'error' if category == 'error' else 'success' }}">{{ message }}</div>{% endfor %}{% endwith %}
+  <h2>Create User</h2>
+  <form method="post" class="form-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="username">Username</label><input id="username" name="username" minlength="3" required></div>
+    <div class="field"><label for="password">Temporary Password</label><input id="password" name="password" type="password" minlength="12" required></div>
+    <div class="field"><label for="role">Role</label><select id="role" name="role"><option value="driver">Driver</option><option value="owner">Owner</option></select></div>
+    <div class="field"><label for="driver_id">Linked Driver (optional)</label><select id="driver_id" name="driver_id"><option value="">None</option>{% for driver in drivers %}<option value="{{ driver.id }}">{{ driver.name }}</option>{% endfor %}</select></div>
+    <div class="form-actions full-width"><button class="button primary" type="submit">CREATE USER</button></div>
+  </form>
+</section>
+<section class="card">
+  <h2>Existing Accounts</h2>
+  <div class="table-wrap"><table><thead><tr><th>Username</th><th>Role</th><th>Driver</th><th>Active</th></tr></thead><tbody>{% for user in users %}<tr><td>{{ user.username }}</td><td>{{ user.role }}</td><td>{{ user.driver_id or '—' }}</td><td>{{ 'Yes' if user.active else 'No' }}</td></tr>{% endfor %}</tbody></table></div>
+</section>
+{% endblock %}

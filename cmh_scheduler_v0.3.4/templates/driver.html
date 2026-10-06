@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><h1 id="driver-heading">MY SCHEDULE</h1><p id="driver-date" class="muted"></p></div></section>
+<section class="card"><div id="driver-schedule"></div></section>
+{% endblock %}
+{% block scripts %}<script>renderDriverSchedule();</script>{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a class="back-link" href="/">← BACK TO TODAY</a>
+
+<section class="page-heading">
+    <div>
+        <h1>NEW TRANSPORTATION APPOINTMENT</h1>
+        <p class="muted">Create the transportation appointment. The outbound trip is scheduled now; the return trip is generated later when the outbound trip is ready for pickup.</p>
+    </div>
+</section>
+
+<form id="appointment-form" class="card">
+
+    <!-- PATIENT -->
+    <div class="form-section">
+        <h2>Patient</h2>
+        <div class="form-grid">
+            <div class="field">
+                <label for="patient-id">Patient</label>
+                <select id="patient-id" name="patientId" required>
+                    <option value="">Select a patient</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Patient Information</label>
+                <div id="patient-profile-preview" class="preview-box">Select a patient to view their transportation requirements.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPOINTMENT INFORMATION -->
+    <div class="form-section">
+        <h2>Appointment Information</h2>
+        <div class="form-grid">
+            <div class="field">
+                <label for="appointment-date">Date</label>
+                <input type="date" id="appointment-date" name="appointmentDate" required>
+            </div>
+            <div class="field">
+                <label for="medical-time">Medical Appointment Time</label>
+                <select id="medical-time" name="medicalTime" required></select>
+                <small class="field-help">
+                    Appointment times are available in 5-minute increments.
+                </small>
+            </div>
+            <div class="field">
+                <label for="trip-type">Appointment Type</label>
+                <select id="trip-type" name="tripType">
+                    <option value="Doctor Appointment">Doctor Appointment</option>
+                    <option value="Therapy">Therapy</option>
+                    <option value="Dialysis">Dialysis</option>
+                    <option value="Procedure">Procedure</option>
+                    <option value="Facility Transfer">Facility Transfer</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- OUTBOUND TRIP -->
+    <div class="form-section">
+        <h2>Outbound Trip</h2>
+        <p class="muted">Patient's trip from their pickup location to the medical destination.</p>
+        <div class="form-grid">
+            <div class="field">
+                <label for="outbound-pickup">Pickup Time</label>
+                <select id="outbound-pickup" name="outboundPickup" required></select>
+                <small class="field-help">
+                    Automatically calculated from the appointment time and estimated trip time.
+                </small>
+            </div>
+            <div class="field">
+                <label for="outbound-driver">Driver</label>
+                <select id="outbound-driver" name="outboundDriver" required></select>
+            </div>
+            <div class="field">
+                <label for="outbound-duration">Estimated Trip Time</label>
+                <select id="outbound-duration" name="outboundDuration" required></select>
+            </div>
+            <div class="field">
+                <label for="pickup-address">Pickup Address</label>
+                <textarea id="pickup-address" name="pickupAddress" rows="3" required></textarea>
+                <small class="field-help">Automatically filled from the patient's saved address. You can change it for this trip without changing the patient's permanent address.</small>
+            </div>
+            <div class="field">
+                <label for="destination">Destination</label>
+                <textarea id="destination" name="destination" rows="3" placeholder="Hospital, clinic, facility, etc." required></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- RETURN TRIP / ONE WAY -->
+    <div class="form-section">
+
+        <h2>Trip Type</h2>
+
+        <div class="confirm-row">
+            <input
+                type="checkbox"
+                id="one-way-trip"
+                name="oneWay"
+            >
+
+            <label for="one-way-trip">
+                <strong>ONE-WAY TRIP</strong> — Do not generate a return trip for this appointment.
+            </label>
+        </div>
+
+        <p class="muted">
+            Leave this unchecked for a normal transportation appointment.
+            The return trip starts blank and is generated only when the outbound
+            trip is marked READY FOR PICKUP. Ben then assigns the return pickup
+            time and driver.
+        </p>
+
+    </div>
+
+
+    <!-- NOTES -->
+    <div class="form-section">
+        <h2>Trip Notes</h2>
+        <div class="field">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Vehicle requirements, special instructions, route notes, etc. Drivers see these notes."></textarea>
+        </div>
+    </div>
+
+    <div id="form-error" class="alert error hidden" role="alert"></div>
+    <div id="form-conflict-preview" class="alert warning hidden" role="status"></div>
+
+    <div class="form-actions">
+        <a href="/" class="button secondary">CANCEL</a>
+        <button type="submit" class="button primary">CREATE TRANSPORTATION APPOINTMENT</button>
+    </div>
+
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script>initAppointmentForm();</script>
+{% endblock %}

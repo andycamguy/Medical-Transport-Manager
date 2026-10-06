@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>CMH Medical Transportation</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="site-header">
+<a class="brand" href="/"><span class="brand-main">CMH</span><span class="brand-sub">MEDICAL TRANSPORTATION</span></a>
+<nav class="main-nav">
+<a href="/" data-page="today">TODAY</a>
+<a href="/calendar" data-page="calendar">CALENDAR</a>
+<a href="/patients" data-page="patients">PATIENTS</a>
+<a href="/drivers" data-page="drivers">DRIVERS</a>
+<a href="/appointment/new" data-page="appointment">+ APPOINTMENT</a>
+<a href="/driver" data-page="driver">MY SCHEDULE</a>
+</nav>
+<div class="account-menu"><span class="logged-in-user">{{ current_user_data.username|upper }}{% if current_user_data.role == "owner" %} · OWNER{% else %} · DRIVER{% endif %}</span><a class="account-link" href="/account">ACCOUNT</a>{% if current_user_data.role == "owner" %}<a class="account-link" href="/users">USERS</a>{% endif %}{% if current_user_data.role == "owner" %}<a class="account-link" href="/users">USERS</a>{% endif %}<a class="account-link" href="/logout">LOG OUT</a></div>
+</header>
+<main class="page-shell">{% block content %}{% endblock %}</main>
+<!-- <footer class="site-footer"><button type="button" class="link-button" onclick="resetDemoData()">Reset demo data</button></footer> -->
+
+<div id="warning-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="warning-title">
+<div class="modal-card">
+<button type="button" class="modal-close" aria-label="Close" onclick="closeConflictModal()">×</button>
+<div class="warning-icon" aria-hidden="true">!</div>
+<h2 id="warning-title">Scheduling warnings</h2>
+<p id="conflict-message"></p>
+<div id="conflict-list" class="conflict-list"></div>
+<label class="confirm-row"><input type="checkbox" id="conflict-confirm"><span>I understand the warnings above and want to assign these trips anyway.</span></label>
+<div class="modal-actions"><button type="button" class="button secondary" onclick="closeConflictModal()">GO BACK</button><button type="button" class="button primary" id="assign-anyway-button" disabled>ASSIGN ANYWAY</button></div>
+</div></div>
+
+<script>window.APP_DATA = {{ app_data|tojson }}; window.CURRENT_USER = {{ current_user_data|tojson }};</script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

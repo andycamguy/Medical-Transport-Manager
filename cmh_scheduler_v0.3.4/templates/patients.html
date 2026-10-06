@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><h1>PATIENTS</h1><p class="muted">Patient profiles and transportation history.</p></div></section>
+<section id="new-patient-card" class="card hidden"><div class="card-title-row"><div><h2>New Patient</h2><p class="muted">Save the patient once, then reuse their information when scheduling.</p></div></div>
+<form id="patient-form" class="form-grid">
+<div><label for="patient-first">First Name</label><input id="patient-first" required></div>
+<div><label for="patient-last">Last Name</label><input id="patient-last" required></div>
+<div><label for="patient-dob">Date of Birth</label><input id="patient-dob" type="date"></div>
+<div><label for="patient-phone">Phone</label><input id="patient-phone"></div>
+<div class="full-width"><label for="patient-address">Home Address</label><textarea id="patient-address" rows="3" required placeholder="123 Main Street, Lexington, KY 40508"></textarea><div id="address-check" class="small-note"></div></div>
+<div><label for="patient-mobility">Mobility Equipment</label><select id="patient-mobility"><option>Wheelchair</option><option>Power Wheelchair</option><option>Walker</option><option>Stretcher</option><option>Geriatric Chair</option></select></div>
+<div><label for="patient-chair-width">Wheelchair Width (inches)</label><input id="patient-chair-width" type="number" min="1" placeholder="Required for wheelchairs"></div>
+<div><label for="patient-vehicle">Vehicle Requirement</label><select id="patient-vehicle"><option>Bronze</option><option>Silver</option><option>Gold</option></select></div>
+<div class="full-width"><label for="patient-notes">Patient Notes</label><textarea id="patient-notes" rows="3"></textarea></div>
+<div class="full-width form-actions"><button type="button" class="button secondary" onclick="hidePatientForm()">CANCEL</button><button type="submit" class="button primary">SAVE PATIENT</button></div>
+</form></section>
+<section class="card"><div class="search-row"><input id="patient-search" class="search-input" placeholder="Search patients..." aria-label="Search patients" oninput="renderPatients()"><button class="button primary" onclick="showPatientForm()">+ NEW PATIENT</button></div><div id="patient-list"></div></section>
+{% endblock %}
+{% block scripts %}<script>initPatients();</script>{% endblock %}

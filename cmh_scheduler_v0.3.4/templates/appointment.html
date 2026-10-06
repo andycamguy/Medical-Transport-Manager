@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block content %}<a class="back-link" href="/">← BACK TO TODAY</a><div id="appointment-detail"></div>{% endblock %}
+{% block scripts %}<script>renderAppointmentDetail({{ appointment_id|tojson }});</script>{% endblock %}

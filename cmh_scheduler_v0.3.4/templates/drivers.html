@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><h1>DRIVERS</h1><p class="muted">Manage active drivers and their normal working days.</p></div><button class="button primary" onclick="showDriverForm()">+ NEW DRIVER</button></section>
+<section id="new-driver-card" class="card hidden"><div class="card-title-row"><h2>New Driver</h2></div>
+<form id="driver-form" class="form-grid">
+<div><label for="driver-name">Name</label><input id="driver-name" required></div>
+<div><label for="driver-phone">Phone</label><input id="driver-phone"></div>
+<div><label for="driver-title">Title</label><input id="driver-title" value="Driver"></div>
+<div><label for="driver-active">Status</label><select id="driver-active"><option value="true">Active</option><option value="false">Inactive</option></select></div>
+<div class="full-width"><label>Normal Work Days</label><div class="days-checks">
+{% for day in ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] %}<label><input class="work-day" type="checkbox" value="{{ day }}" {% if day not in ['sat', 'sun'] %}checked{% endif %}> {{ day|upper }}</label>
+{% endfor %}</div></div>
+<div class="full-width form-actions"><button type="button" class="button secondary" onclick="hideDriverForm()">CANCEL</button><button type="submit" class="button primary">SAVE DRIVER</button></div>
+</form></section>
+<section id="driver-list" class="driver-list"></section>
+{% endblock %}
+{% block scripts %}<script>renderDrivers();</script>{% endblock %}
